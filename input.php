@@ -1,30 +1,7 @@
 <?php
 
+include("auth.php");
 include("config.php");
-
-if (isset($_POST['login'])) {
-    $username = filter_input(INPUT_POST, 'username', FILTER_SANITIZE_STRING);
-    $password = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_STRING);
-
-    $sql = "SELECT * FROM users WHERE username=:username";
-    $stmt = $db->prepare($sql);
-
-    $params = array(
-        ":username" => $username
-    );
-
-    $stmt->execute($params);
-
-    $user = $stmt->fetch(PDO::FETCH_ASSOC);
-
-    if ($user) {
-        if (password_verify($password, $user["password"])) {
-            session_start();
-            $_SESSION["user"] = $user;
-            header("Location: profile.php");
-        }
-    }
-}
 
 ?>
 
@@ -39,10 +16,13 @@ if (isset($_POST['login'])) {
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
 
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" />
+
     <!-- CSS -->
     <link rel="stylesheet" href="css/style.css">
 
-    <title>Pemantau Kesehatan Siswa Berbasis Web | Login - Student</title>
+    <title>Pemantau Kesehatan Siswa Berbasis Web | Input Data - <?= $_SESSION['user']['nama_lengkap'] ?></title>
 </head>
 
 <body>
@@ -52,22 +32,34 @@ if (isset($_POST['login'])) {
                 <div class="card">
                     <div class="card-header bg-success text-center text-white">
                         <h3>Pemantau Kesehatan Siswa Berbasis Web</h3>
-                        <p>SMK Negeri 17 Jakarta</p>
+                        <p><?= $_SESSION["user"]["nama_lengkap"]; ?></p>
                     </div>
                     <div class="card-body">
-                        <form action="" method="POST">
-                            <div class="form-group">
-                                <label for="username">Username</label>
-                                <input type="text" name="username" id="username" placeholder="Masukkan Username Anda" class="form-control   ">
+                        <ul class="nav nav-tabs card-header-tabs justify-content-between">
+                            <div class="navbar mb-2">
+                                <li class="nav-item">
+                                    <a class="nav-link text-success" href="profile.php">Profil</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-success active" aria-current="true" href="input.php">Input</a>
+                                </li>
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle text-success" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        Grafik
+                                    </a>
+                                    <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                        <li><a class="dropdown-item text-success" href="grafik-siswa.php">Siswa</a></li>
+                                        <li><a class="dropdown-item text-success" href="grafik-kelas.php">Kelas</a></li>
+                                    </ul>
+                                </li>
                             </div>
-                            <div class="form-group my-2">
-                                <label for="password">Password</label>
-                                <input type="password" name="password" id="password" placeholder="Masukkan Password Anda" class="form-control   ">
+                            <div class="d-flex align-items-center">
+                                <button class="btn btn-danger">
+                                    <a href="logout.php" class="text-light">Keluar <i class="fas fa-sign-out-alt"></i></a>
+                                </button>
                             </div>
-                            <p>Belum punya akun? <a href="register.php">Daftar</a></p>
-                            <button type="submit" class="btn btn-primary" name="login">Masuk</button>
-                            <button type="reset" class="btn btn-warning">Ulangi</button>
-                        </form>
+                        </ul>
+                        
                     </div>
                     <div class="card-footer bg-success text-center text-white">
                         &copy; 2021, Jonathan Basuki.

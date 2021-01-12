@@ -1,3 +1,9 @@
+<?php
+
+include("auth.php");
+
+?>
+
 <!doctype html>
 <html lang="en">
 
@@ -9,10 +15,13 @@
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
 
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" />
+
     <!-- CSS -->
     <link rel="stylesheet" href="css/style.css">
 
-    <title>Pemantau Kesehatan Siswa Berbasis Web | Login</title>
+    <title>Pemantau Kesehatan Siswa Berbasis Web | Grade <?= $_SESSION['user']['kelas'] ?> Chart</title>
 </head>
 
 <body>
@@ -22,22 +31,34 @@
                 <div class="card">
                     <div class="card-header bg-success text-center text-white">
                         <h3>Pemantau Kesehatan Siswa Berbasis Web</h3>
-                        <p>SMK Negeri 17 Jakarta</p>
+                        <p><?= $_SESSION["user"]["nama_lengkap"]; ?></p>
                     </div>
                     <div class="card-body">
-                        <form action="validation.php" method="">
-                            <div class="form-group">
-                                <label for="email">Email</label>
-                                <input type="email" name="email" id="email" placeholder="Masukkan Email Anda" class="form-control   ">
+                        <ul class="nav nav-tabs card-header-tabs justify-content-between">
+                            <div class="navbar mb-2">
+                                <li class="nav-item">
+                                    <a class="nav-link text-success" href="profile.php">Profil</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-success" href="input.php">Input</a>
+                                </li>
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle text-success active" aria-current="true" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        Grafik
+                                    </a>
+                                    <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                        <li><a class="dropdown-item text-success" href="grafik-siswa.php">Siswa</a></li>
+                                        <li><a class="dropdown-item text-success" href="grafik-kelas.php">Kelas</a></li>
+                                    </ul>
+                                </li>
                             </div>
-                            <div class="form-group my-2">
-                                <label for="password">Password</label>
-                                <input type="password" name="password" id="password" placeholder="Masukkan Password Anda" class="form-control   ">
+                            <div class="d-flex align-items-center">
+                                <button class="btn btn-danger">
+                                    <a href="logout.php" class="text-light">Keluar <i class="fas fa-sign-out-alt"></i></a>
+                                </button>
                             </div>
-                            <p>Belum punya akun? <a href="register.php">Daftar</a></p>
-                            <button type="submit" class="btn btn-primary" name="login">Masuk</button>
-                            <button type="reset" class="btn btn-warning">Reset</button>
-                        </form>
+                        </ul>
+                        
                     </div>
                     <div class="card-footer bg-success text-center text-white">
                         &copy; 2021, Jonathan Basuki.

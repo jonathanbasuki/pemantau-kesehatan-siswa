@@ -1,6 +1,6 @@
 <?php
 
-require_once("config.php");
+include("config.php");
 
 if (isset($_POST['register'])) {
     $nama_lengkap = filter_input(INPUT_POST, 'nama_lengkap', FILTER_SANITIZE_STRING);
@@ -8,9 +8,9 @@ if (isset($_POST['register'])) {
     $jurusan = filter_input(INPUT_POST, 'jurusan', FILTER_SANITIZE_STRING);
     $kelas = filter_input(INPUT_POST, 'kelas', FILTER_SANITIZE_STRING);
     $jenis_kelamin = filter_input(INPUT_POST, 'jenis_kelamin', FILTER_SANITIZE_STRING);
-    $password = password_hash($_POST["password"], PASSWORD_DEFAULT);
+    $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
 
-    $sql = "INSERT INTO users (username, password, nama_lengkap, jurusan, kelas, jenis_kelamin) VALUES (:username, :password, :nama_lengkap, :jurusan, :kelas, :jenis_kelamin)";
+    $sql = "INSERT INTO users (nama_lengkap, username, jurusan, kelas, jenis_kelamin, password) VALUES (:nama_lengkap, :username, :jurusan, :kelas, :jenis_kelamin, :password)";
     $stmt = $db->prepare($sql);
 
     $params = array(
@@ -43,7 +43,7 @@ if (isset($_POST['register'])) {
     <!-- CSS -->
     <link rel="stylesheet" href="css/style.css">
 
-    <title>Pemantau Kesehatan Siswa Berbasis Web | Login</title>
+    <title>Pemantau Kesehatan Siswa Berbasis Web | Register - Student</title>
 </head>
 
 <body>
@@ -59,19 +59,19 @@ if (isset($_POST['register'])) {
                         <form action="" method="POST">
                             <div class="form-group">
                                 <label for="nama_lengkap">Nama Lengkap</label>
-                                <input type="text" name="nama_lengkap" id="nama_lengkap" placeholder="Masukkan Nama Lengkap Anda" class="form-control">
+                                <input type="text" name="nama_lengkap" id="nama_lengkap" placeholder="Masukkan Nama Lengkap Anda" class="form-control" required>
                             </div>
                             <div class="form-group my-2">
                                 <label for="username">Username</label>
-                                <input type="username" name="username" id="username" placeholder="Masukkan Username Anda" class="form-control   ">
+                                <input type="username" name="username" id="username" placeholder="Masukkan Username Anda" class="form-control   " required>
                             </div>
                             <div class="form-group">
                                 <label for="password">Atur Password</label>
-                                <input type="password" name="password" id="password" placeholder="Atur Password Anda" class="form-control   ">
+                                <input type="password" name="password" id="password" placeholder="Atur Password Anda" class="form-control   " required>
                             </div>
                             <div class="form-group my-2">
                                 <label for="jurusan">Jurusan</label>
-                                <select name="jurusan" id="jurusan" class="form-control">
+                                <select name="jurusan" id="jurusan" class="form-control" required>
                                     <option value="Akuntansi dan Keuangan Lembaga">Akuntansi dan Keuangan Lembaga</option>
                                     <option value="Bisnis Daring dan Pemasaran">Bisnis Daring dan Pemasaran</option>
                                     <option value="Otomatisasi dan Tata Kelola Perkantoran">Otomatisasi dan Tata Kelola Perkantoran</option>
@@ -81,7 +81,7 @@ if (isset($_POST['register'])) {
                             </div>
                             <div class="form-group">
                                 <label for="kelas">Kelas</label>
-                                <select name="kelas" id="kelas" class="form-control">
+                                <select name="kelas" id="kelas" class="form-control" required>
                                     <option value="10">X</option>
                                     <option value="11">XI</option>
                                     <option value="12">XII</option>
@@ -89,14 +89,14 @@ if (isset($_POST['register'])) {
                             </div>
                             <div class="form-group my-2">
                                 <label for="jenis_kelamin">Jenis Kelamin</label>
-                                <select name="jenis_kelamin" id="jenis_kelamin" class="form-control">
+                                <select name="jenis_kelamin" id="jenis_kelamin" class="form-control" required>
                                     <option value="Laki-laki">Laki-laki</option>
                                     <option value="Perempuan">Perempuan</option>
                                 </select>
                             </div>
                             <p>Sudah punya akun? <a href="index.php">Masuk</a></p>
                             <button type="submit" class="btn btn-primary" name="register">Daftar</button>
-                            <button type="reset" class="btn btn-warning">Reset</button>
+                            <button type="reset" class="btn btn-warning">Ulangi</button>
                         </form>
                     </div>
                     <div class="card-footer bg-success text-center text-white">
